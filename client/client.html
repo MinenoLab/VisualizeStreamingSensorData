@@ -1,0 +1,124 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>センサデータ受信クライアント</title>
+
+  <script type="text/javascript" src="js/jquery-2.2.4.min.js"></script>
+  <script type="text/javascript" src="js/main.js"></script>
+  <script type="text/javascript" src="js/webgl.js"></script>
+  <script id="vs" type="x-shader/x-vertex">
+    attribute vec3 position;
+    attribute vec4 color;
+    varying   vec4 vColor;
+    uniform   float pointSize;
+    void main(){
+      vColor = color;
+      gl_Position = vec4(position, 1.0);
+      gl_PointSize = pointSize;
+    }
+  </script>
+  <script id="fs" type="x-shader/x-fragment">
+    precision mediump float;
+    varying vec4 vColor;
+    void main(){
+      gl_FragColor = vColor;
+    }
+  </script>
+  <link rel="stylesheet" type="text/css" href="css/client.css">
+  <link rel="stylesheet" type="text/css" href="css/client.css">
+</head>
+<body onLoad="onLoad()">
+<!--
+  <nobr> GWIPアドレス：</nobr>
+  <input type="text" id="gwip_textbox" size="30" maxlength="20">
+-->
+<p>
+  補間サイズ
+  <select id="interval" onchange="setInterval(this.value)">
+    <option value="3.125">144x288</option>  
+    <option value="6.25">72×144</option>  
+    <option value="12.5">36×72</option>  
+    <option value="25.0">18x36</option>
+    <option value="50.0" selected="true">9×18</option>
+
+</select>
+
+  <!--
+  補間アルゴリズム
+  <select id="inter_algorithm" onchange="setInterAlgorithm(this.value)">
+    <option value="idw" selected>IDW</option>  
+  </select>
+-->
+
+可視化軸
+<select id="axis" onchange="setAxis(this.value)">
+  <option value="synthesized" selected>合成値</option>  
+  <option value="x" >X軸</option>  
+  <option value="y" >Y軸</option>  
+  <option value="z" >Z軸</option>  
+</select>
+
+<!--
+描画方法
+<select id="draw_method" onchange="setDrawMethod(this.value)">
+  <option value="webgl" selected>WebGL</option>  
+  <option value="canvas2d" >Canvas2D</option>  
+</select>
+-->
+
+可視化最大値
+<input type="number" name="draw_max_value" id="draw_max_value" onchange="setDrawMaxValue(this.value)">
+<input type="range" name="draw_max_value_range" id="draw_max_value_range" 
+step="0.01" min="0.01" max="5" onchange="setDrawMaxValue(this.value)"
+onmousemove='document.getElementById("draw_max_value").value=this.value;'>
+
+Worker数
+<select id="worker_num" onchange="setWorkerNum(this.value)">
+  <option value="1" selected>1</option>  
+  <option value="2" >2</option> 
+  <option value="3" >3</option> 
+  <option value="4" >4</option>  
+  <option value="5" >5</option> 
+  <option value="6" >6</option>  
+  <option value="7" >7</option>  
+  <option value="8" >8</option> 
+  <option value="9" >9</option> 
+  <option value="10" >10</option>  
+</select>
+
+</p>
+<input type="button" id="connectWS_button" value="接続" onClick="connectWS()">
+<input type="button" id="disConnectWS_button" value="切断" onClick="disConnectWS()" disabled>
+<!--
+<input type="button" id="backView_button" value="←" onClick="backView()" >
+<input type="button" id="backView_button" value="→" onClick="fowardView()" >
+-->
+<hr>
+<p>振動状況</p>
+<canvas id="accel_canvas"></canvas>
+<!--<div id="accel_canvas"></div>-->
+
+<!--
+<hr>
+<p>受信データ</p>
+-->
+<!-- センシングタイム表示-->
+<!--
+<p id = "sensingtime"></p> 
+<table>
+ <thead>
+   <tr>
+     <th>センサID</th>
+     <th>X軸</th>
+     <th>Y軸</th>
+     <th>Z軸</th>
+   </tr>
+ </thead>
+ <tbody id="data_table">
+ -->
+ <!-- センサデータがくる -->
+</tbody>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+ table {
+  width: auto;
+  border-spacing: 0;
+  font-size:14px;
+}
+table th {
+  color: #ffffff;
+  padding: 8px 15px;
+  background: #000080;
+}
+table tr td {
+  padding: 5px 15px;
+  border-bottom: 1px solid #000080;
+  border-left: 1px solid #000080;
+  text-align: center;
+  width: 80px;
+}
+table tr td:last-child {
+  border-right: 1px solid #000080;
+}
+table tr {
+  background: #ffffff;
+}
